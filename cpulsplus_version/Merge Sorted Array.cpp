@@ -22,5 +22,26 @@ public:
         }
         ***********
         **/
+        /*
+        int posA = m-1;
+        int posB = n-1;
+        int cur = m+n-1;
+        while(posA >=0 && posB >=0)
+        {
+            if(A[posA] > B[posB])
+            {
+                A[cur--] = A[posA--];
+            }
+            else
+            {
+                A[cur--] = B[posB--];
+            }
+        }
+        
+        while( posB >=0 )
+        {
+            A[cur--] = B[posB--];
+        }
+        */
     }
 };
