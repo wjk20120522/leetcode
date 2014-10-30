@@ -56,6 +56,81 @@ public:
         vector<int> res(2);
         res[0] = target_one, res[1] = target_two;
         return res;
+
+        //another method
+        /*
+
+        //  int begin = -1, end = -1;
+        vector<int> res;
+        int left = 0, right = n - 1;
+        int middle;
+        while (left <= right)
+        {
+            middle = left + (right - left) / 2;
+            if (A[middle] == target)
+                break;
+            else if (A[middle] < target)
+            {
+                left = middle + 1;
+            }
+            else
+            {
+                right = middle - 1;
+            }
+        }
+
+        if (A[middle] == target)
+        {
+            int tmp = middle;
+
+            int leftmost = middle, rightmost = middle;
+            while (left < tmp)
+            {
+                leftmost = left + (tmp - left) / 2;
+                if (A[leftmost] == target)
+                {
+                    tmp = leftmost;
+                }
+                else
+                {
+                    left = leftmost+1;
+                }
+            }
+            res.push_back(tmp);
+
+            tmp = middle;
+            while (tmp < right)
+            {
+                rightmost = tmp + (right - tmp) / 2;
+                if (A[rightmost] == target)
+                {
+                    if (A[rightmost+1] == target)
+                        tmp = rightmost+1;
+                    else
+                    {
+                        res.push_back(rightmost);
+                        return res;
+                    }
+                        
+                }
+                else
+                {
+                    right = rightmost-1;
+                }
+            }
+            res.push_back(tmp);
+            return res;
+
+        }
+        else
+        {
+            res.push_back(-1);
+            res.push_back(-1);
+            return res;
+        }
+
+        */
+
     }
 };
 
