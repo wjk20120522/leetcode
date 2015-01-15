@@ -47,3 +47,41 @@ public:
 		return head;
     }
 };
+
+/*
+ class Solution {
+ public:
+	 ListNode *insertionSortList(ListNode *head) {
+		 if (head == NULL || head->next == NULL) return head;
+		 // ListNode *res = head;
+		 ListNode *tmp,*prev, *now;
+		 ListNode *cur = head->next;
+		 //断了后路
+		 head->next = NULL;
+
+		 while (cur) {
+			 int va = cur->val;
+			 tmp = head;
+			 while (tmp && va > tmp->val) {
+				 prev = tmp;
+				 tmp = tmp->next;
+			 }
+			 now = cur;
+			 cur = cur->next;
+			 //插在头上
+			 if (tmp == head) {
+				 now->next = head;
+				 head = now;
+			 }
+			 else {
+				 prev->next = now;
+				 now->next = tmp;
+			 }
+
+			 //  cur = cur->next;
+		 }
+		 return head;
+
+	 }
+ };
+*/
