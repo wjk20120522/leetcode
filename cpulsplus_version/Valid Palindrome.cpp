@@ -1,40 +1,20 @@
+/**
+ * more neat code
+ * 
+ */
+
 class Solution {
 public:
-    bool isPalindrome(string s) {
-	    if( 0 == s.length()) {
-			return true;
-		}
-		int i,j;
-		for(i=0,j=s.length()-1; i<j; i++,j--) {
-			//filter the non-alnum
-			while(!isalnum(s[i])) {
-				i++;
-				//avoid endless loop
-				if(i>s.length()-1) {
-					break;
-				}
-			}
-			while(!isalnum(s[j])) {
-				j--;
-				//avoid endless loop
-				if(j<0) {
-					break;
-				}
-			}
-			if(i>=j) {
-				break;
-			}
-			//compare the two characters
-			if(isdigit(s[i]) || isdigit(s[j]) ) {
-				if(s[i] != s[j] ) {
-					return false;
-				}
-			} else {
-				if(tolower(s[i]) != tolower(s[j])) {
-					return false;
-				}
-			}
-		}
-		return true;
-    }
+  bool isPalindrome(string s) {
+	  if (s.empty()) return true;
+	  int begin = 0, end = s.size() - 1;
+	  while (begin < end) {
+		  while (begin < end && !isalnum(s[begin])) begin++;
+		  while (begin < end && !isalnum(s[end])) end--;
+		  if (tolower(s[begin]) != tolower(s[end])) 
+			  return false;
+		  begin++; end--;
+	  }
+	  return true;
+  }
 };
