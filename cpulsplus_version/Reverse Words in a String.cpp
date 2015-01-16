@@ -63,3 +63,56 @@ int main() {
         s.reverseWords(str);
         return 0;
 }
+
+/**
+ * second time doing it
+ */
+
+/*
+
+class Solution {
+public:
+    void reverseWords(string &s) {
+        if (s.length() == 0) return;
+		  reverse(s.begin(), s.end());
+		  int prevSpace = 0;
+		  bool first = true;
+		  string res;
+		  for (unsigned int i = 0; i < s.length(); i++) {
+			  if (s[i] == ' ') {
+
+				  reverse(&s[prevSpace], &s[i]);
+				  
+				  if (first && prevSpace != i) {
+					  first = false;
+				  }
+				  else {
+					  res += ' ';
+				  }
+				  res += s.substr(prevSpace, i - prevSpace);
+				  i++;
+				  while (i < s.length() && s[i] == ' ') i++;
+				  prevSpace = i;
+			  }
+			  
+			 
+		  }
+		  if (prevSpace <= s.length() - 1) {
+		      if (!first)   res += ' ';
+			  reverse(&s[prevSpace], &s[s.length()]);
+			  res += s.substr(prevSpace, s.length() - 1 - prevSpace +1);
+		  }
+		  s = res;
+		  
+		  int i = 0;
+		  while (s[i] == ' ') i++;
+		  s = s.substr(i);
+		  int j = s.length() - 1;
+		  while (j >= 0 && s[j] == ' ') {
+			  j--;
+		  }
+		  s = s.substr(0, j+1);
+    }
+};
+
+ */
