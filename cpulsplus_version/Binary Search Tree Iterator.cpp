@@ -10,7 +10,7 @@
 class BSTIterator {
 public:
 	BSTIterator(TreeNode *root) {
-		
+		// convert BST to linear array use inorder traversal
 		while (!stack.empty() || root != NULL) {
 			if (root) {
 				stack.push_back(root);
