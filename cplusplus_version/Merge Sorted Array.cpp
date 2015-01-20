@@ -1,0 +1,47 @@
+class Solution {
+public:
+    void merge(int A[], int m, int B[], int n) {
+    	// use STL function
+    	copy( B, B + n, A + m);
+		sort(A, A + m + n);
+		/** another concrete method
+		 *********
+        //put the num from the tail of array A
+        int index = m+n-1;
+        for(; index>=0; index--) {
+        	if(n<=0) {
+        		return ;
+        	} else if(m<=0) {
+        		A[index] = B[--n];
+        	} else if(A[m-1] < B[n-1]) {
+        		A[index] = B[--n];
+        	} else {
+        		A[index] = A[--m];
+        	}
+
+        }
+        ***********
+        **/
+        /*
+        int posA = m-1;
+        int posB = n-1;
+        int cur = m+n-1;
+        while(posA >=0 && posB >=0)
+        {
+            if(A[posA] > B[posB])
+            {
+                A[cur--] = A[posA--];
+            }
+            else
+            {
+                A[cur--] = B[posB--];
+            }
+        }
+        
+        while( posB >=0 )
+        {
+            A[cur--] = B[posB--];
+        }
+        */
+    }
+};
