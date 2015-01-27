@@ -5,23 +5,22 @@ public:
 		int sum_profit = 0;
 		int min, max;
 		if (prices.size() == 0) return 0;
-		vector<int>::iterator it = prices.begin();
-		
-		min = max = *it;
 
-		for (; it != prices.end(); it++)
+		min = max = prices[0];
+
+		for (int i=0; i<prices.size(); i++)
 		{
-			if (*it - min > profit)
+			if (prices[i] - min > profit)
 			{
-				profit = *it - min;
-				max = *it;
+				profit = prices[i] - min;
+				max = prices[i];
 			}
 			
-			if (*it < max)
+			if (prices[i] < max)
 			{
 				sum_profit += profit;
 				profit = 0;
-				max = min = *it;
+				max = min = prices[i];
 			}
 		}
 		//此处需要考虑结束时最后一个profit没有加到sum_profit里面。
