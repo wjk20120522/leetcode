@@ -1,54 +1,39 @@
-/**
- * my method, timeout
 class LRUCache{
 public:
-
-	int **arr;
-	int begin;
-	int end;
-	int capacity;
-
 	LRUCache(int capacity) {
-		
-		arr = new int*[capacity+1];
-		for (int i = 0; i < capacity+1; i++) {
-			arr[i] = new int[2];
-		}
-		begin = end = 0;
-		this->capacity = capacity + 1;
+		cap = capacity;
 	}
 
 	int get(int key) {
-		if (begin == end) return -1; // empty
-		for (int i = begin; (i + 1) % capacity != end; i=(i+1)%capacity) {
-			if (arr[i][0] == key) {
-				return arr[i][1];
-			}
+		
+		auto it = dict.find(key);
+		if (it != dict.end()) {
+			data.splice(data.begin(), data, it->second);
+			dict[key] = data.begin();                    // if no this line code, it's ac also but i don't think so  
+			return it->second->second;
 		}
 		return -1;
 	}
 
 	void set(int key, int value) {
-		for (int i = begin; (i + 1) % capacity != end; i = (i + 1) % capacity) {
-			if (arr[i][0] == key) {
-				arr[i][1] = value;    // find the key
-				return;
-			}
+		if (dict.find(key) != dict.end()) {
+			dict[key]->second = value;
+			data.splice(data.begin(), data, dict[key]);
+			return;
 		}
-		if ((end + 1) % capacity != begin) {   // not full
-			arr[end][0] = key;
-			arr[end][1] = value;
-			end = (end + 1) % capacity;
-		}
-		else {                   // full, then invalid the begin then insert
-			begin = (begin + 1) % capacity;
-			arr[end][0] = key;
-			arr[end][1] = value;
-			end = (end + 1) % capacity;
 
+		if (dict.size() == cap) {
+			int tail_key = data.back().first;
+			dict.erase(tail_key);
+			data.pop_back();
 		}
+
+		data.push_front(make_pair(key, value));
+		dict[key] = data.begin();
 	}
+
+private:
+	int cap;
+	list< pair<int, int> > data;
+	unordered_map<int, list< pair<int, int> >::iterator > dict;
 };
-
- */
-
