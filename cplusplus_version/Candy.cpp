@@ -64,3 +64,36 @@ public:
 
 	}
 };
+
+/**
+ * more beautiful code below
+ */
+
+/*
+
+class Solution {
+public:
+	int candy(vector<int> &ratings) {
+		int size = ratings.size();
+		if (size <= 1) {
+			return size;
+		}
+
+		vector<int>candy(size, 1);
+		//	main idea: calculate small-big, then calculate small-big in reverse order
+		
+		for (unsigned int i = 1; i < size; i++){
+			if (ratings[i] > ratings[i - 1]) {
+				candy[i] = candy[i-1] + 1;
+			}
+		}
+		for (unsigned int i = size - 1; i > 0; i--) {
+			if (ratings[i - 1] > ratings[i]) {
+				candy[i - 1] = candy[i - 1] > candy[i] + 1 ? candy[i - 1] : candy[i] + 1;
+			}
+		}
+		return accumulate(candy.begin(), candy.end(), 0);
+	}
+	
+};
+ */
