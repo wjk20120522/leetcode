@@ -1,3 +1,8 @@
+/**
+ * My solution , TLE
+ */
+
+/*
 class Solution {
 public:
 	vector<vector<string>> findLadders(string start, string end, unordered_set<string> &dict) {
@@ -21,9 +26,9 @@ public:
 		v.push_back(start);
 
 
-		/*
-		create a dictionary to store alphabet used
-		*/
+		
+		//create a dictionary to store alphabet used
+		
 		int i, j;
 		vector< vector<char> > alpha(end.size());
 		for (string str : dict) {
@@ -64,9 +69,7 @@ public:
 				string tmp = cur;
 				for (int j = 0; j<alpha[i].size(); j++) {
 					tmp[i] = alpha[i][j];
-				/*for (char c = 'a'; c <= 'z'; c++) {
-					tmp[i] = c;*/
-
+				
 					if (dict.find(tmp) != dict.end() && ( dis.find(tmp) == dis.end()  || dis[tmp] > dis[cur] )     ) {
 						dis[tmp] = dis[cur] + 1;
 						v.push_back(tmp);
@@ -76,4 +79,84 @@ public:
 				}
 			} // end for	
 	}
+};
+*/
+
+
+/*
+other people method
+ */
+class Solution {
+public:
+    void calAdj(const string s, unordered_set<string> & dict, unordered_set<string>& adjset){
+         adjset.clear();
+         for( int i = 0; i < s.size(); ++i){
+             string tmp(s);
+             for( char az = 'a'; az <= 'z'; ++az){
+                 tmp[i] = az;
+                 if( dict.find(tmp) != dict.end()){ //tmp is in dictionary
+                     adjset.insert(tmp);
+                 }
+             }
+         }
+    }
+
+    void pathreverse(unordered_map<string, unordered_set<string>>& pathmap, string start, vector<vector<string>>& pathlist){
+    
+         vector<string> & lastpath = pathlist[pathlist.size()-1];
+         lastpath.push_back( start );
+         vector<string> prepath(lastpath);
+    
+         int p = 0;
+         for( auto nstr : pathmap[start] ){
+              if( p > 0 )//generate new path
+                  pathlist.push_back(prepath);
+              pathreverse(pathmap, nstr, pathlist);
+              ++p;
+         }
+    }
+
+    vector< vector<string> > findLadders(string start, string end, unordered_set<string> &dict){
+
+      vector< vector<string> > pathlist;
+      string tmp = start;
+      start = end;
+      end = tmp;
+      int slen = start.size();
+      int elen = end.size();
+      if( slen != elen )
+          return pathlist;
+
+      dict.insert(start);
+      dict.insert(end);
+
+      //run bfs
+      unordered_map<string, unordered_set<string>> pathmap;
+      unordered_set<string> curset;
+      curset.insert(start);
+      dict.erase(start);
+      unordered_set<string> adjset;
+      bool find = false;
+
+      while( !find && curset.size() > 0 ){
+           unordered_set<string> preset(curset);
+           curset.clear();
+           for( auto pres : preset){
+                if( pres == end ){//find it
+                    find = true;
+                    pathlist.push_back(vector<string>());
+                    pathreverse(pathmap, end, pathlist);
+                    break;
+                }
+                calAdj(pres, dict, adjset);
+                curset.insert(adjset.begin(),adjset.end());//put in next layer
+                for( auto nexts : adjset ){
+                     pathmap[nexts].insert(pres); // record its parents
+                }
+           }
+           for( auto vs : curset) // remove visited string
+                dict.erase(vs);
+      }
+      return pathlist;
+    }
 };
