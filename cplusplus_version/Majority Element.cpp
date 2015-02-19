@@ -14,7 +14,6 @@ public:
 			}
 		}
 		return s.top();
-
 	}
 };
 
