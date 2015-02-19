@@ -18,8 +18,10 @@ public:
 	}
 };
 
+
 /*
 same idea but use one variable
+*/
 class Solution {
 public:
     int majorityElement(vector<int> &num) {
@@ -39,11 +41,11 @@ public:
 		return major;
     }
 };
-*/
 
 
 /*
 you can use sort but it don't get the lowest time complexity
+*/
 class Solution {
 public:
 	int majorityElement(vector<int> &num) {
@@ -51,10 +53,11 @@ public:
 		return num[num.size() / 2];
 	}
 };
-*/
+
 
 /*
 bit manipulation, but it is not that fast
+ */
 class Solution {
 public:
 	int majorityElement(vector<int> &num) {
@@ -70,4 +73,3 @@ public:
 		return ret;
 	}
 };
- */
