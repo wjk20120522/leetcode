@@ -5,8 +5,6 @@ public:
 		for (char c : s) {
 			res = res * 26 + c - 'A' + 1;
 		}
-		return res;
-
-        
+		return res;     
     }
 };

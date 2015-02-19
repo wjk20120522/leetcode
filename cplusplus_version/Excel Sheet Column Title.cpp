@@ -14,7 +14,10 @@ public:
 		}
     }
 };
+
+
 /* shorter...
+*/
 string convertToTitle(int n) {
 	string res;
 	while (n) {	
@@ -23,7 +26,5 @@ string convertToTitle(int n) {
 	}
 	return res;
 }
-*/
-		
 
 
