@@ -20,6 +20,7 @@ public:
     }
 };
 
+
 /*
 another similar method
  */
@@ -40,6 +41,7 @@ public:
     }
 };
 
+
 /*
 use another int to save the reverse of x
  */
@@ -55,3 +57,39 @@ public:
         return (x==rev || x==rev/10);
     }
 };
+
+
+/*
+no extra space used, but may hard to write code correctly
+ */
+#define order(x) ((int)pow(10, (int)log10(x)))
+
+bool isPalindrome(int x) {
+    // non palindrome number for negative numbers
+    if (x < 0)
+        return false;
+
+    while (x) {
+        // non palindrome if the most significant digit
+        // doesn't match the least one
+        if (x % 10 != x / order(x))
+            return false;
+
+        // remove both the most and the least digit
+        // if the second most significant digit is NOT 0,
+        if (order(x) / 10 == order(x - x % 10 * order(x)))
+            x = (x - x % 10 * order(x)) / 10;
+
+        // it's 0, then make sure the second least is also 0
+        // non palindrome if otherwise
+        else if (x / 10 % 10 != 0)
+            return false;
+
+        // now the second most and the second least are both 0,
+        // remove the most and the least, and change the two 0's to 1's
+        else
+            x = (x - x % 10 * order(x) + order(x) / 10) / 10 + 1;
+    }
+
+    return true;
+}
