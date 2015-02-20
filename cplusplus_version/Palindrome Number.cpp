@@ -1,9 +1,6 @@
-#include <iostream>
-#include <cmath>
-
-using namespace std;
-
-
+/*
+use two int
+ */
 class Solution {
 public:
     bool isPalindrome(int x) {
@@ -23,9 +20,22 @@ public:
     }
 };
 
-int main() {
-	int x = 1;
-	
-	Solution s;
-	std::cout<<"res"<<s.isPalindrome(x)<<std::endl;
-}
+/*
+another similar method
+ */
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        //special case
+        if (x == INT_MIN || x<0) return false;   // no corresponding positive number
+        
+        int digits = log10(x)+1;
+        for (int i = 1; i <= digits / 2; i++) {
+            int right = ((x % (int)pow(10, i)) / pow(10, i - 1));
+            int left = (int)(x / pow(10, digits - i)) % 10;
+            if (left != right)
+                return false;
+        }
+        return true;
+    }
+};
