@@ -1,3 +1,6 @@
+/*
+use one stack to save the min element and another stack performs normal push,pop,top...
+ */
 class MinStack {
 public:
 	void push(int x) {
