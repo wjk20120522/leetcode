@@ -1,73 +1,30 @@
+/*
+short code
+ */
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char> > &board) {
-        int m = board.size();
-        if(m != 9) return false;
-        int n= board[0].size();
-        if(n != 9) return false;
-        
-        int count = 0;
-        for(int i=0; i<9; i++)
-        {
-            count = 0;
-            for(int j=0; j<9; j++)
-            {
-                if(board[i][j] != '.')
-                {
-                    if( (count >> board[i][j]) & 1)
-                    {
-                        return false;
-                    }
-                    count |= (1 << board[i][j]);
+        bool rows[10][10], cols[10][10], blocks[10][10];
+        // use memset use less time than use vector !!!
+        memset(rows, 0, sizeof(rows));
+        memset(cols, 0, sizeof(rows));
+        memset(blocks, 0, sizeof(rows));
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != '.') {
+                    int num = board[i][j] - '0';
+                    if (rows[i][num] || cols[j][num] || blocks[i / 3 * 3 + j / 3][num]) return false;
+                    rows[i][num] = cols[j][num] = blocks[i / 3 * 3 + j / 3][num] = true;
                 }
             }
         }
-        
-        for(int j=0; j<9; j++)
-        {
-            count = 0;
-            for(int i=0; i<9; i++)
-            {
-                if(board[i][j] != '.')
-                {
-                    if( (count >> board[i][j]) & 1)
-                    {
-                        return false;
-                    }
-                    count |= (1 << board[i][j]);
-                }
-            }
-        }
-        
-        int blockSize = 3;
-        for(int i=0; i< blockSize; i++)
-        {
-            for(int j=0; j<blockSize; j++)
-            {
-                count = 0;
-                for(int first = i*blockSize; first < (i+1)*blockSize; first ++)
-                {
-                    for(int second = j*blockSize; second < (j+1)*blockSize; second++)
-                    {
-                        if(board[first][second] != '.')
-                        {
-                            if( (count >> board[first][second]) & 1)
-                            {
-                                return false;
-                            }
-                            count |= (1 << board[first][second]);
-                        }
-                    }
-                }
-            }
-        }
-        
-        return true;    
+        return true;
     }
 };
 
+
 /**
- * 思路更为明确点的解法，摘自陈浩
+ * clear code
  */
 class Solution {
 public:
