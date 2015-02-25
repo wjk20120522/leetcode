@@ -1,59 +1,47 @@
-/**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
+/*
+recursive method
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode *root) {
+        if (root == NULL) return true;
+        return twoSameTree(root->left, root->right);
+    }
+
+    bool twoSameTree(TreeNode *leftTree, TreeNode *rightTree) {
+        if (leftTree == NULL || rightTree == NULL) return leftTree == rightTree;
+        if (leftTree->val != rightTree->val) return false;
+        return twoSameTree(leftTree->left, rightTree->right) && twoSameTree(leftTree->right, rightTree->left);
+    }
+};
+
+/*
+the iterator method
  */
 typedef pair<TreeNode*, TreeNode*>  nodepair;
 class Solution {
 public:
     bool isSymmetric(TreeNode *root) {
         if(root == NULL) return true;
-        /*      the iterator method
-                              
         queue<nodepair>q;
         q.push(make_pair(root->left, root->right));
-        
-        while(q.size())
-        {
+
+        while (!q.empty()) {
             nodepair np = q.front(); q.pop();
-            
-            if(np.first && np.second)
-            {
-                if(np.first->val == np.second->val)
-                {
-                    q.push(make_pair(np.first->left, np.second->right) );
-                    q.push(make_pair(np.first->right, np.second->left) );
+
+            if (np.first && np.second) {
+                if (np.first->val == np.second->val) {
+                    q.push(make_pair(np.first->left, np.second->right));
+                    q.push(make_pair(np.first->right, np.second->left));
                 }
-                else
-                {
+                else {
                     return false;
                 }
-            }
-            else if(np.first || np.second)
-            {
+             } 
+             else if (np.first || np.second) {
                 return false;
             }
         }
         return true;
-        
-        */
-        if(theSame(root->left, root->right)) return true;
-        return false;
-        
     }
-    
-    bool theSame(TreeNode *left, TreeNode *right)
-    {
-        if(left == NULL && right == NULL) return true;
-        else if(left == NULL || right == NULL) return false;
-        
-        if(left->val != right->val ) return false;
-        return theSame(left->left, right->right) && theSame(left->right, right->left);
-    }
-    
-   
 };
