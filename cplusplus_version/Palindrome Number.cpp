@@ -6,14 +6,14 @@ public:
     bool isPalindrome(int x) {
     	int res = 0;
     	int temp = x;
-    	if(x < 0) {
+    	if(temp < 0) {
     		return false;
     	}
-    	while(x) {
-    		res = res*10 + x%10;
-    		x /= 10;
+    	while(temp) {
+    		res = res*10 + temp%10;
+    		temp /= 10;
     	}
-    	if(temp == res) {
+    	if(x == res) {
     		return true;
     	}
     	return false;
