@@ -34,6 +34,7 @@ public:
 	}
 };
 
+
 /*
 another method: use only int
  */
@@ -54,6 +55,8 @@ public:
 		return  neg * result;
     }
 };
+
+
 /*
 similar like above
  */
