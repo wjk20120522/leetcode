@@ -1,11 +1,3 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 /*
 calculate the length of two linklist and make the longer linklist pointer go some steps
  */
@@ -37,5 +29,26 @@ public:
             res++; root = root->next;
         }
         return res;
+    }
+};
+
+
+/*
+short code
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == NULL || headB == NULL) return NULL;
+        ListNode *pa = headA, *pb = headB;
+        while (pa && pb && pa != pb) {
+            pa = pa->next;
+            pb = pb->next;
+            if (pa == pb)
+                return pa;
+            if (pa == NULL) pa = headB;
+            if (pb == NULL) pb = headA;
+        }
+        return pa;
     }
 };
