@@ -15,10 +15,18 @@ public:
     }
 };
 
-int main() 
-{
-	Solution s;
-	int Arr[] = {1,1,2,3,2,3,4,5,5};
-	cout<<s.singleNumber(Arr,9)<<endl;
-	return 0;
-}
+
+/*
+also pretty ok, without using extra memory means O(1)
+ */
+class Solution {
+public:
+    int singleNumber(int A[], int n) {
+        int res = 0;
+        for(int i=0; i<n; i++)
+        {
+            res ^= A[i];
+        }
+        return res;
+    }
+};
