@@ -17,10 +17,21 @@ public:
     }
 };
 
-int main() {
-	Solution s;
-	
-	int Arr[] = {1,1,1,2,2,2,3,5,5,5};
-	cout<<s.singleNumber(Arr,10)<<endl;
-	return 0;
-}
+
+/*
+similar but use less space
+ */
+class Solution {
+public:
+    int singleNumber(int A[], int n) {
+        int res = 0,tmp;
+        for (int i = 0; i < 32; i++) {
+            tmp = 0;
+            for (int j = 0; j < n; j++) {
+                tmp += (A[j] >> i) & 1;
+            }
+            res |= (tmp % 3) << i;
+        }
+        return res;
+    }
+};
