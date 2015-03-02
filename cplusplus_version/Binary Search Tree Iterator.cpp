@@ -1,46 +1,38 @@
-/**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class BSTIterator {
 public:
 	BSTIterator(TreeNode *root) {
-		// convert BST to linear array use inorder traversal
-		while (!stack.empty() || root != NULL) {
-			if (root) {
-				stack.push_back(root);
-				root = root->left;
-			}
-			else {
-				root = stack.back();
-				res.push_back(root->val);
-				stack.pop_back();
-				
-				root = root->right;
-			
-			}	
+		pos = -1;
+		while (root) {
+			v.push_back(root);
+			root = root->left;
+			pos++;
 		}
-
-		pos = 0;
 	}
 
 	/** @return whether we have a next smallest number */
 	bool hasNext() {
-		return pos < res.size();
-	//	return !s.empty();
+		return pos != -1;
 	}
 
 	/** @return the next smallest number */
 	int next() {
-		return res[pos++];
+		TreeNode *cur = v.back();
+		v.pop_back();
+		if (cur->right) {
+			TreeNode * child = cur->right;
+			v.push_back(child);
+			pos++;
+			while (child->left) {
+				v.push_back(child->left);
+				pos++;
+				child = child->left;
+			}
+		}
+		pos--;
+		return cur->val;
+
 	}
 private:
-	vector<int> res;
-	vector<TreeNode *> stack;
+	vector<TreeNode *> v;
 	int pos;
 };
