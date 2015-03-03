@@ -1,34 +1,18 @@
 class Solution {
 public:
-    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
-        int n = gas.size();
-
-		int begin = 0;
-		int before = n;
-
-		int all = 0;
-
-		while (before != begin)
-		{
-			all += gas[begin] - cost[begin];
-			if (all >= 0)
-			{
-				begin++;
+	int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+		int N = gas.size();
+		int begin = N - 1, end = 0, sum = gas[begin] - cost[begin];
+		while (begin > end) {
+			if (sum < 0) {
+				begin--;
+				sum += gas[begin] - cost[begin];
 			}
-			else
-			{
-				while (all <0 && before != begin)
-				{
-					before--;
-					all += gas[before] - cost[before];
-
-				}
-				if (all >= 0) begin++;
+			else {
+				sum += gas[end] - cost[end];
+				end++;
 			}
 		}
-
-		if (all >= 0) return before%n;
-		return -1;
-    }
-    
+		return sum >= 0 ? begin : -1;
+	}
 };
