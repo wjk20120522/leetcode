@@ -1,45 +1,29 @@
 class Solution {
 public:
-    vector<vector<string>> partition(string s) {
-
-		vector<string> res;
-		return findP(s, res);
-	}
-
-	vector<vector<string>> findP(string s, vector<string> prevs) {
-		/*if (s.length() == 0) return res;
-		if (s.length() == 1) patch(s);*/
+	vector<vector<string>> partition(string s) {
 		vector<vector<string>> res;
-		for (unsigned int i = 1; i <= s.length(); i++) {
-			vector<string> set;
+		if (s.length() == 0) {
+			vector<string>tmp;
+			res.push_back(tmp);
+			return res;
+		}
+		for (int i = 1; i <= s.length(); i++) {
 			string str = s.substr(0, i);
 			if (isPalindrome(str)) {
-				for (string s : prevs) {
-					set.push_back(s);
-				}
-				set.push_back(str);
-				if (i == s.length()) {
-					res.push_back(set);
-				}
-				else {
-					vector<vector<string>> tmp = findP(s.substr(i), set);
-					for (auto v : tmp) {
-						res.push_back(v);
-					}
-					
+				// find back string result first
+				vector<vector<string>> tmpres = partition(s.substr(i));
+				for (auto tmp : tmpres) {
+					tmp.insert(tmp.begin(), str);
+					res.push_back(tmp);
 				}
 			}
 		}
 		return res;
-
 	}
-	
 
-	bool isPalindrome(string s) {
-		int begin = 0, end = s.length() - 1;
-		while (begin < end) {
-			if (s[begin] != s[end]) return false;
-			begin++; end--;
+	bool isPalindrome(string str) {
+		for (int i = 0, j = str.length() - 1; i < j; i++, j--) {
+			if (str[i] != str[j]) return false;
 		}
 		return true;
 	}
