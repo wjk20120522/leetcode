@@ -78,3 +78,80 @@
 	  int row;
 	  int col;
   };
+
+
+/*
+same idea, not use Point, use queue to avoid stackoverflow
+ */
+class Solution {
+public:
+
+	void solve(vector<vector<char>> &board) {
+		rows = board.size();
+		if (rows == 0) return;
+		cols = board[0].size();
+		//set the four edge 'O' to 'M', so 'M' can't change
+		
+		// first row and last row
+		for (int i = 0; i < cols; i++) {
+			if (board[0][i] == 'O') {
+				changeToM(board, 0, i);
+			}
+			if (board[rows - 1][i] == 'O') {
+				changeToM(board, rows - 1, i);
+			}
+		}
+		//first column and last column
+		for (int i = 0; i < rows; i++) {
+			if (board[i][0] == 'O') {
+				changeToM(board, i, 0);
+			}
+			if (board[i][cols - 1] == 'O') {
+				changeToM(board, i, cols - 1);
+			}
+		}
+
+		lastChange(board);
+
+	}
+
+	void lastChange(vector<vector<char>> &board) {
+		for (int i = 0; i<rows; i++) {
+			for (int j = 0; j<cols; j++) {
+				if (board[i][j] == 'M') {
+					board[i][j] = 'O';
+				}
+				else if (board[i][j] == 'O') {
+					board[i][j] = 'X';
+				}
+			}
+		}
+	}
+	void changeToM(vector<vector<char>> &board, int r, int c) {
+		queue<pair<int, int>>q;
+		q.emplace(r, c);
+		board[r][c] = 'M';
+		while (!q.empty()) {
+			r = q.front().first, c = q.front().second;
+			q.pop();
+			if (c > 0 && board[r][c - 1] == 'O') {   // left
+				q.emplace(r, c - 1);
+				board[r][c-1] = 'M';
+			}
+			if (c < cols - 1 && board[r][c + 1] == 'O') {  // right
+				q.emplace(r, c + 1);
+				board[r][c+1] = 'M';
+			}
+			if (r >0 && board[r - 1][c] == 'O') {   //up
+				q.emplace(r - 1, c);
+				board[r-1][c] = 'M';
+			}
+			if (r < rows - 1 && board[r + 1][c] == 'O') {   //down
+				q.emplace(r + 1, c);
+				board[r+1][c] = 'M';
+			}
+		}
+	}
+private:
+	int rows, cols;
+};
