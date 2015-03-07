@@ -15,6 +15,7 @@ public:
     }
 };
 
+
 /*
 bottom up, change original triangle
  */
@@ -54,5 +55,4 @@ public:
 		}
 		return minTotal;
     }
-
 };
