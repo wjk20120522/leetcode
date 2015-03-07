@@ -1,56 +1,54 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-using namespace std;
-
-
+/*
+sort it and find the two, O(NlgN), 17ms
+ */
 class Solution {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
-    	vector<int> temp_vec(numbers);
-		sort(numbers.begin(), numbers.end());
-		vector<int>::iterator it_begin = numbers.begin(), it_end = numbers.end();
-		int begin = 0, end = numbers.size()-1;
-		for(; begin < end; ) {
-			int temp = numbers[begin] + numbers[end];
-			int one,two;
-			if(temp == target) {
-				for(int i=0; i<temp_vec.size(); i++) {
-					if(numbers[begin] == temp_vec[i] || numbers[end] == temp_vec[i]) {
-						one = i+1;
-						break;
-					}
+    	vector<int>dump = numbers;
+		sort(dump.begin(), dump.end());
+		int begin = 0, end = numbers.size() - 1;
+		while (begin < end) {
+			if (dump[begin] + dump[end] == target) break;
+			else if (dump[begin] + dump[end] > target) end--;
+			else begin++;
+		}
+		int first =0, second = 0;
+		bool hasbegin = false, hasend = false;
+		for (int i = 0; i < numbers.size(); i++) {
+			if ( (!hasbegin &&numbers[i] == dump[begin]) || (!hasend && numbers[i] == dump[end]) ) {
+				if (numbers[i] == dump[begin])  hasbegin = true;
+				else hasend = true;
+				if (first == 0) {
+					first = i+1;
 				}
-				for(int i=0; i<temp_vec.size(); i++) {
-					if((numbers[end] == temp_vec[i] ||numbers[begin] == temp_vec[i] ) && i >= one ) {
-						two = i+1;
-						break;
-					}
+				else {
+					end = i + 1;
+					vector<int>res;
+					res.push_back(first); res.push_back(end);
+					return res;
 				}
-			
-				vector<int> res(2);
-				res[0] = one ; res[1] = two;
-				return res;
-			}
-			if(temp < target) {
-				begin ++;
-			} else {
-				end --;
 			}
 		}
     }
 };
 
-int main() {
-	Solution s;
-	const int num = 3;
-	vector<int> v(num);
-	
-	v[0] = 5; v[1] = 75; v[2] = 25; 
-	
-	vector <int> res;
-	
-	res = s.twoSum(v,100);
-	cout<<res[0]<<" "<<res[1]<<endl;
-}
+
+/*
+use hashmap, O(N), 20ms
+ */
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+        unordered_map<int, int> mp;
+		vector<int>res;
+		for (int i = 0; i < numbers.size(); i++) {
+			int tofind = target - numbers[i];
+			if (mp.find(tofind) != mp.end()) {
+				res.push_back(mp[tofind]);
+				res.push_back(i + 1);
+				return res;
+			}
+			mp[numbers[i]] = i + 1;
+		}
+    }
+};
