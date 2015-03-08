@@ -1,55 +1,35 @@
 class Solution {
 public:
 	void connect(TreeLinkNode *root) {
-		if (root == NULL) return;
-		TreeLinkNode *pre = root, *cur, *curChild = NULL, *nextChilid = NULL;
-		while (pre)
-		{
-			cur = pre;
-			bool first = true;
-			curChild = nextChilid = NULL;
-			while (cur)
-			{
+		TreeLinkNode *cur = root, *child, *tmp;
+		bool firstchild;
+		while (cur) {
+			firstchild = false;
+			child = cur->left;
+			while (cur) {
 				if (cur->left) {
-					if (first) {
-						first = false;
-						pre = cur->left;
-					}
-					if (curChild == NULL) {
-						curChild = cur->left;
+					if (firstchild) {
+						tmp->next = cur->left;
+						tmp = cur->left;
 					}
 					else {
-						nextChilid = cur->left;
+						firstchild = true;
+						tmp = child = cur->left;
 					}
 				}
-				if (curChild && nextChilid) {
-					curChild->next = nextChilid;
-					curChild = nextChilid;
-					nextChilid = NULL;
-				}
-
 				if (cur->right) {
-					if (first) {
-						first = false;
-						pre = cur->right;
-					}
-					if (curChild == NULL) {
-						curChild = cur->right;
+					if (firstchild) {
+						tmp->next = cur->right;
+						tmp = cur->right;
 					}
 					else {
-						nextChilid = cur->right;
+						firstchild = true;
+						tmp = child = cur->right;
 					}
-				}
-				if (curChild && nextChilid) {
-					curChild->next = nextChilid;
-					curChild = nextChilid;
-					nextChilid = NULL;
 				}
 				cur = cur->next;
 			}
-			if (first) {
-				return;
-			}
+			cur = child;
 		}
 	}
 };
