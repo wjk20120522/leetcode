@@ -20,3 +20,29 @@ public:
 		 }
 	 }
 };
+
+/*
+similar with I
+*/
+class Solution {
+public:
+    vector<vector<int> > subsetsWithDup(vector<int> &S) {
+       	vector<vector<int> > res;
+	sort(S.begin(), S.end());
+	vector<int>tmp;
+	getsubsets(res, 0, tmp, S);
+	return res;
+    }
+
+    void  getsubsets(vector<vector<int> >&res, int idx, vector<int>&tmp, vector<int>&S) {
+	if(idx == S.size()) {
+		res.push_back(tmp);
+		return ;
+	}
+	tmp.push_back(S[idx]);
+	getsubsets(res, idx+1, tmp, S);
+	tmp.pop_back();
+	while(idx <S.size()-1 && S[idx] == S[idx+1]) idx++;
+	getsubsets(res, idx+1, tmp, S);
+        }
+};
