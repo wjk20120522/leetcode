@@ -34,3 +34,37 @@ public:
 		 return str;
     }
 };
+
+
+/*
+
+ */
+class Solution {
+public:
+	string multiply(string num1, string num2) {
+		int len1 = num1.length(), len2 = num2.length();
+		if (len1 == 0 || len2 == 0 || (num1.length() == 1 && num1[0] == '0') || (num2.length() == 1 && num2[0] == '0')) return "0";
+		vector<int> res(len1 + len2,0);
+		string ret;
+		reverse(num1.begin(), num1.end());
+		reverse(num2.begin(), num2.end());
+
+		for (int i = 0; i < len1; i++) {
+			for (int j = 0; j < len2; j++) {
+				res[i + j] += (num1[i] - '0')*(num2[j] - '0');
+			}
+		}
+		for (int i = 0; i < len1 + len2; i++) {
+			if (res[i] >= 10) {
+				res[i + 1] += res[i] / 10;
+				res[i] = res[i] % 10;
+			}
+		}
+		int idx = len1 + len2 - 1;
+		while (idx >=0 && res[idx] == 0) idx--;
+		while (idx >= 0) {
+			ret += to_string(res[idx--]);
+		}
+		return ret;
+	}
+};
