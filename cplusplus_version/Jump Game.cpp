@@ -16,3 +16,19 @@ public:
 		}
 	}
 };
+
+
+/*
+short code
+ */
+class Solution {
+public:
+    bool canJump(int A[], int n) {
+        int maxlength = 0;
+		for (int i = 0; i < n; i++) {
+			if (i>maxlength) return false;
+			maxlength = max(maxlength, i + A[i]);
+		}
+		return true;
+    }
+};
