@@ -22,7 +22,7 @@ public:
 		if (begin == end) return A[begin];
 		int middle = (begin + end) / 2;
 
-		int left = getMaxSubArray(A, 0, middle);
+		int left = getMaxSubArray(A, begin, middle);
 		int right = getMaxSubArray(A, middle + 1, end);
 
 		//int midSum = A[middle] + A[middle+1];
