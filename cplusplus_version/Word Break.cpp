@@ -17,3 +17,25 @@ public:
 		 return dp[s.length()];
     }
 };
+
+
+/*
+simlilar method
+ */
+class Solution {
+public:
+	bool wordBreak(string s, unordered_set<string> &dict) {
+		vector<bool> visit(s.length(), false);
+		visit[0] = true;
+		for (int i = 0; i < s.length(); i++) {
+			// if j change from 0 to i, it costs more time, maybe test specific
+			for (int j = i; j >=0; j--) {
+				if (visit[j] && dict.find(s.substr(j, i - j + 1)) != dict.end()) {
+					visit[i+1] = true;
+					break;
+				}
+			}
+		}
+		return visit[s.length()];
+	}
+};
