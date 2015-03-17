@@ -1,56 +1,26 @@
-/**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Solution {
 public:
     vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
-        vector< vector<int> > res;
+        vector<vector<int> > res;
 		if (root == NULL) return res;
-		stack<TreeNode *> one, two;
-		bool first = true;
-		one.push(root);
-		vector<int> tmp;
-		TreeNode *cur;
-		while (1)
-		{
+		queue<TreeNode *> q,p;
+		vector<int>tmp;
+		q.push(root);
+		while (!q.empty()) {
 			tmp.clear();
-			if (first)
-			{
-				if (one.empty()) return res;
-				while (!one.empty())
-				{
-					cur = one.top();
-					tmp.push_back(cur->val);
-					if (cur->left) two.push(cur->left);
-					if (cur->right) two.push(cur->right);
-					one.pop();
-				}
-				
-				first = false;
-			}
-			else
-			{
-				if (two.empty()) return res;
-				while (!two.empty())
-				{
-					cur = two.top();
-					tmp.push_back(cur->val);
-					if (cur->right) one.push(cur->right);
-					if (cur->left) one.push(cur->left);
-					two.pop();
-				}
-				first = true;
+			while (!q.empty()) {
+				TreeNode *cur = q.front(); q.pop();
+				tmp.push_back(cur->val);
+				if (cur->left) p.push(cur->left);
+				if (cur->right) p.push(cur->right);
 			}
 			res.push_back(tmp);
+			q.swap(p);
 		}
-		// should not be here
-		return res;
+		for (int i = 1; i < res.size(); i += 2) {
+			reverse(res[i].begin(), res[i].end());
+		}
 
+		return res;
     }
 };
