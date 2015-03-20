@@ -23,3 +23,28 @@ public:
 		 return maxNow;
     }
 };
+
+
+/*
+similar like above
+ */
+class Solution {
+public:
+    int maxProduct(int A[], int n) {
+        if (n == 0) return 0;
+		int res = A[0];
+
+		int maxNow = A[0];
+		int minNow = A[0], minPre;
+		for (int i = 1; i < n; i++) {
+			minPre = minNow;
+			minNow = min(A[i], minPre*A[i]);
+			minNow = min(minNow, A[i] * maxNow);
+
+			maxNow = max(A[i], maxNow*A[i]);
+			maxNow = max(maxNow, minPre*A[i]);
+			res = max(res, maxNow);
+		}
+		return res;
+    }
+};
