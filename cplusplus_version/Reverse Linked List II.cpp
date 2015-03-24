@@ -41,3 +41,36 @@ public:
         return head;
     }
 };
+
+
+class Solution {
+public:
+    ListNode *reverseBetween(ListNode *head, int m, int n) {
+        ListNode *cur = head, *tmp, *pre = NULL;
+        ListNode *first = NULL, *last, *next;
+        for (int i = 1; i < m; i++) {
+            pre = cur;
+            cur = cur->next;
+        }
+        last = cur;
+        next = cur->next;
+        for (int i = m; i < n; i++) {
+            tmp = next->next;
+            if (i == n - 1) 
+                first = tmp;
+            next->next = cur;
+            cur = next;
+            next = tmp;
+        }
+        
+        if (pre == NULL) {
+            head = cur;
+        }
+        else {
+            pre->next = cur;
+        }
+        if (last != cur)
+        last->next = first;
+        return head;
+    }
+};
