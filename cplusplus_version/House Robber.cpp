@@ -1,18 +1,17 @@
 class Solution {
 public:
-    int rob(vector<int> &num) {
-        int houses = (int)num.size();
-        if(houses == 0) return 0;
-        if(houses == 1) return num[0];
-        if(houses == 2) return num[0] > num[1] ? num[0] : num[1];
-        if(houses == 3) return num[0]+num[2] > num[1] ? num[0] + num[2] : num[1];
-
-        //don't forget this
-        num[2] += num[0];
-
-        for(int i=3; i<houses; i++) {
-            num[i] += (num[i-2] > num[i-3] ? num[i-2] : num[i-3]);
+    int rob(vector<int>& nums) {
+        int res = 0;
+        for(int i=0; i<nums.size(); i++) {
+            if(i == 2) {
+                nums[i] += nums[i-2];
+            } else if(i > 2) {
+                nums[i] += max(nums[i-2], nums[i-3]);
+            }
+            if(nums[i] > res) {
+                res = nums[i];
+            }
         }
-        return max(num[houses-1], num[houses-2]);
+        return res;
     }
 };
