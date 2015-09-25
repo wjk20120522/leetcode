@@ -1,14 +1,13 @@
 class Solution {
 public:
-    int searchInsert(int A[], int n, int target) {
-        int i;
-        for( i=0; i<n; i++)
-        {
-            if(A[i] >= target)
-            {
-                return i; 
-            }
+    int searchInsert(vector<int>& nums, int target) {
+        int begin = 0, end = nums.size()-1, mid;
+        while(begin <= end) {
+            mid = begin + (end-begin)/2;
+            if(nums[mid] == target) return mid;
+            else if(nums[mid] > target) end --;
+            else begin++;
         }
-        return n;
+        return begin > end ? begin : end;
     }
 };
