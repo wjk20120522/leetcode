@@ -1,37 +1,38 @@
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(root == NULL) return res;
+        stack<TreeNode *> q;
+        q.push(root);
+        while(!q.empty()) {
+            TreeNode *tmp = q.top();  q.pop();
+            res.push_back(tmp->val);
+            if(tmp->right) q.push(tmp->right);
+            if(tmp->left) q.push(tmp->left);
+        }
+        return res;
+    }
+};
+
+
 /**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
+Recursive solution, trival
  */
 class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode *root) {
-        vector<int> v;
-		stack<TreeNode *> nodes;
-	
-		TreeNode *tmp;
-		if (root != NULL)
-		{
-			nodes.push(root);
-			while (!nodes.empty())
-			{
-				tmp = nodes.top();
-				nodes.pop();
-				v.push_back(tmp->val);
-				if (tmp->right != NULL)
-				{
-					nodes.push(tmp->right);
-				}
-				if (tmp->left != NULL)
-				{
-					nodes.push(tmp->left);
-				}
-			}
-		}
-		return v;
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(root == NULL) return res;
+        preorderTraversal(root, res);
+        return res;
     }
+    
+private:
+    void preorderTraversal(TreeNode* root, vector<int>&res) {
+        res.push_back(root->val);
+        if(root->left) preorderTraversal(root->left, res);
+        if(root->right) preorderTraversal(root->right, res);
+    }   
 };
+
